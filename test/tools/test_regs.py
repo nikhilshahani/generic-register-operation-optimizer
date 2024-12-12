@@ -1,4 +1,4 @@
-def test_parse(t):
+def test_parse(t, g, regs):
     return {'test_regs':
         groov.Group('test_regs', [
             groov.Register('test', 0x0, [

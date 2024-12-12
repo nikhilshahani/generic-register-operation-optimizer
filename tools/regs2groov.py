@@ -19,8 +19,8 @@ def select_name_func(choice):
     )[choice]
 
 
-# def generate_groups(groups, ):
-def generate_groups(groups, config):
+# def write_hpp(group, config):
+def write_hpp(group, config):
     namespace = config.namespace
     name_func = select_name_func(config.naming)
     bus_type = config.bus
@@ -64,9 +64,8 @@ def generate_groups(groups, config):
         print("#include <cstdint>", file=f)
         print("", file=f)
 
-        g = groups[config.group]
         print(f"namespace {namespace} {{", file=f)
-        print(generate_group(g), end="", file=f)
+        print(generate_group(group), end="", file=f)
         print(f"}} // namespace {namespace}", file=f)
 
 
@@ -74,8 +73,8 @@ def generate(config):
     for f in config.parser_modules:
         exec(open(f).read())
     parse_fn = eval(config.parse_fn)
-    groups = parse_fn(config.input)
-    generate_groups(groups, config)
+    group = parse_fn(config.input, config.group, config.registers)
+    write_hpp(group, config)
 
 # Below this line is just for use as a script
 
